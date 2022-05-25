@@ -1,3 +1,4 @@
+//go:build darwin
 // +build darwin
 
 // Package winsparkle provides go bindings for WinSparkle.
@@ -58,7 +59,7 @@ import (
 	"time"
 	"unsafe"
 
-	_ "github.com/abemedia/go-sparkle/Sparkle.framework"
+	_ "github.com/DVSoftware/go-sparkle/Sparkle.framework"
 )
 
 func init() {
