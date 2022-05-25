@@ -10,33 +10,24 @@
 #define SUAPPCAST_H
 
 #if __has_feature(modules)
-#if __has_warning("-Watimport-in-framework-header")
-#pragma clang diagnostic ignored "-Watimport-in-framework-header"
-#endif
 @import Foundation;
 #else
 #import <Foundation/Foundation.h>
 #endif
-#import <Sparkle/SUExport.h>
+#import "SUExport.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class SUAppcastItem;
-
-/**
- The appcast representing a collection of `SUAppcastItem` items in the feed.
- */
 SU_EXPORT @interface SUAppcast : NSObject
 
-- (instancetype)init NS_UNAVAILABLE;
+@property (copy, nullable) NSString *userAgentString;
+@property (copy, nullable) NSDictionary<NSString *, NSString *> *httpHeaders;
 
-/**
- The collection of update items.
- 
- These `SUAppcastItem` items are in the same order as specified in the appcast XML feed and are thus not sorted by version.
- */
-@property (readonly, copy) NSArray<SUAppcastItem *> *items;
+- (void)fetchAppcastFromURL:(NSURL *)url inBackground:(BOOL)bg completionBlock:(void (^)(NSError *_Nullable))err;
+- (SUAppcast *)copyWithoutDeltaUpdates;
 
+@property (readonly, copy, nullable) NSArray *items;
 @end
 
 NS_ASSUME_NONNULL_END
